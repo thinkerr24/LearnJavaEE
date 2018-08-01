@@ -1,2 +1,2 @@
 # LearnJavaEE
-This my JavaEE repository for learing!
+This my JavaEE repository for learning!
