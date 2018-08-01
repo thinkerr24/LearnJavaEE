@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd ">
+<!-- 指定扫描包名下(包括子目录下)所有类中的注解 -->
+<context:component-scan base-package="com.rr.bean"></context:component-scan>
+<bean name="car2" class="com.rr.bean.Car">
+	<property name="name" value="BMW"></property>
+	<property name="color" value="white"></property>
+</bean>
+</beans>
