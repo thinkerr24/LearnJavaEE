@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://www.springframework.org/schema/beans" 
+xmlns:p ="http://www.springframework.org/schema/p" 
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd ">
+	<!-- set方式注入 -->
+	<bean name="user" class="com.rr.bean.User">
+		<!-- 值类型注入：为User对象中名为name的属性注入tom作为值 -->
+		<property name="name" value="tom"></property>
+		<property name="age" value="20"></property>
+		<!-- 引用类型注入:②为car属性注入下方配置的car对象  value要和①中的对象name一致-->
+		<property name="car" ref="car"></property>
+	</bean>
+	
+	<!-- ①将car对象配置到容器中  -->
+	<bean name="car" class="com.rr.bean.Car">
+		<property name="name" value="Porsche"></property>
+		<property name="color" value="pink"></property>
+	</bean>
+	
+<!--================华丽的分割线======================= -->
+	<!-- 构造函数注入 -->
+	<bean name="user2" class="com.rr.bean.User">
+	   <constructor-arg name="name" value="Tony"></constructor-arg>
+	   <constructor-arg name="car" ref="car"></constructor-arg>
+	</bean>
+
+<!--================华丽的分割线======================= -->
+	<!-- p名称空间注入
+		①导入P名称空间 xmlns:p ="http://www.springframework.org/schema/p" 
+		②使用p:属性完成注入
+			|-值类型 p:属性名="值"
+			|-应用类型p:属性名-ref="bean名称"
+	 -->
+	<bean name="user3" class="com.rr.bean.User" p:name="Jack" p:age="20" p:car-ref="car" >
+	</bean>
+<!--================华丽的分割线======================= -->
+    <!-- SPEL方式注入
+    	取其它对象的值，不能取引用对象
+     -->
+    <bean name="user4" class="com.rr.bean.User" >
+    	<property name="name" value="#{user.name}"></property>
+    	<property name="age" value="#{user3.age}"></property>
+    	<property name="car" ref="car"></property>
+    </bean>
+</beans>
