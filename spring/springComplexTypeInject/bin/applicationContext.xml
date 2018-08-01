@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://www.springframework.org/schema/beans" 
+xmlns:p ="http://www.springframework.org/schema/p" 
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd ">
+	<!-- set方式注入 -->
+	<bean name="user" class="com.rr.bean.User">
+		<!-- 值类型注入：为User对象中名为name的属性注入tom作为值 -->
+		<property name="name" value="tom"></property>
+		<property name="age" value="20"></property>
+		<!-- 引用类型注入:②为car属性注入下方配置的car对象  value要和①中的对象name一致-->
+		<property name="car" ref="car"></property>
+	</bean>
+	
+	<!-- ①将car对象配置到容器中  -->
+	<bean name="car" class="com.rr.bean.Car">
+		<property name="name" value="Porsche"></property>
+		<property name="color" value="pink"></property>
+	</bean>
+	
+<!--================华丽的分割线======================= -->
+	<!-- 构造函数注入 -->
+	<bean name="user2" class="com.rr.bean.User">
+	   <constructor-arg name="name" value="Tony"></constructor-arg>
+	   <constructor-arg name="car" ref="car"></constructor-arg>
+	</bean>
+
+<!--================华丽的分割线======================= -->
+	<!-- p名称空间注入
+		①导入P名称空间 xmlns:p ="http://www.springframework.org/schema/p" 
+		②使用p:属性完成注入
+			|-值类型 p:属性名="值"
+			|-应用类型p:属性名-ref="bean名称"
+	 -->
+	<bean name="user3" class="com.rr.bean.User" p:name="Jack" p:age="20" p:car-ref="car" >
+	</bean>
+<!--================华丽的分割线======================= -->
+    <!-- SPEL方式注入
+    	取其它对象的值，不能取引用对象
+     -->
+    <bean name="user4" class="com.rr.bean.User" >
+    	<property name="name" value="#{user.name}"></property>
+    	<property name="age" value="#{user3.age}"></property>
+    	<property name="car" ref="car"></property>
+    </bean>
+  
+ <!--================华丽的分割线======================= -->
+ 	<!-- 复杂类型注入 -->
+ 	<bean name="cb" class="com.rr.bean.CollectionBean">
+ 		<!-- 如果数组只注入一个值(对象)，直接使用value|ref 	-->
+ 		<property name="arr" value="collection"></property>
+ 	
+ 		<!-- <property name="arr">
+ 			<array>
+ 				<value>tom</value>
+ 				<value>777</value>
+ 				<ref bean="user4"/>
+ 			</array>
+ 		</property> -->
+ 		
+	<!-- 如果List只注入一个值(对象)，直接使用value|ref -->
+	<property name="list" value="2019"></property> 
+	<!-- <property name="list">
+		<list>
+			<value>Bob</value>
+			<value>Alice</value>
+			<ref bean="user4"/>
+		</list>
+	</property> -->
+	
+	<!-- Map类型注入 -->
+	<property name="map">
+		<map>
+			<entry key="url" value="jdbc:mysql://localhost"></entry>
+			<entry key="user" value-ref="user4"></entry>
+			<entry key-ref="user3" value-ref="user2"></entry>
+		</map>
+	</property>
+	
+	<!-- Properties类型注入, 全都是字符串 -->
+		<property name="prop">
+			<props>
+				<prop key="driverClass">com.jdbc.mysql.Driver</prop>
+				<prop key="username">root</prop>
+				<prop key="password">1223</prop>
+			</props>
+		</property>
+ 	</bean>
+ 	
+ 	
+</beans>
