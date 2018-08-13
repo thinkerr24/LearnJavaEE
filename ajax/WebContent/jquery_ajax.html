@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+<script>
+	function fn1(){
+		// get异步访问
+		$.get(
+					"/ajax/ajaxServlet2", // url地址
+					{"name":"张三", "age":25}, // 请求参数
+					function(data) {   			// 执行成功后的回调函数
+						//alert(data.result + data.age);
+						alert(data);
+					},
+					"text"
+			);
+	}
+	
+	function fn2(){
+		// post异步访问
+		$.post(
+				"/ajax/ajaxServlet2", // url地址
+				{"name":"李四", "age":22}, // 请求参数
+				function(data) {   			// 执行成功后的回调函数
+					alert(data.result + data.age);
+				},
+				"json"
+		);
+	}
+	function fn3(){
+		// ajax方式访问
+		$.ajax({
+				url:"/ajax/ajaxServlet2", // url地址
+				async:true,
+				type:"post", // 请求方式
+				data:{"name":"Alice", "age":30},
+				success:function(data) {  // 请求成功
+					alert(data.result+"|"+data.age);
+				},
+				error:function() {	// 请求失败
+					
+				},
+				dataType:"json"
+		});
+	}
+</script>
+</head>
+<body>
+	<input type="button" value="get访问服务器" onclick="fn1()"/>
+	<br/>
+	<input type="button" value="post访问服务器" onclick="fn2()"/>
+	<br/>
+	<input type="button" value=".ajax访问" onclick="fn3()"/>
+</body>
+</html>

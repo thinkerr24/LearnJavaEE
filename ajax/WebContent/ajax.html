@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>使用原生JS实现AJAX</title>
+<script>
+
+	function fn1() {
+		// 1.创建ajax引擎对象 ---- 所有的操作都是通过引擎对象
+		var xmlHttp = new XMLHttpRequest();
+		// 2.绑定监听----监听服务器是否已经返回相应数据
+		xmlHttp.onreadystatechange = function() {
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+			// 5.接收相应数据
+			var res = xmlHttp.responseText;
+			//alert(res);
+			document.getElementById("numspan1").innerHTML = res;
+			}
+		}
+		// 3.绑定地址
+		xmlHttp.open("GET", "/ajax/ajaxServlet?name=lisi", true);
+		// 4.发送请求
+		xmlHttp.send();
+		}
+	
+	function fn2() {
+		// 1.创建ajax引擎对象 ---- 所有的操作都是通过引擎对象
+		var xmlHttp = new XMLHttpRequest();
+		// 2.绑定监听----监听服务器是否已经返回相应数据
+		xmlHttp.onreadystatechange = function() {
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+			// 5.接收相应数据
+			var res = xmlHttp.responseText;
+			//alert(res);
+			document.getElementById("numspan2").innerHTML = res;
+			}
+		}
+		// 3.绑定地址
+		xmlHttp.open("POST", "/ajax/ajaxServlet", false);
+		// 4.发送请求
+		xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlHttp.send("name=rr");
+		}
+</script>
+</head>
+<body>
+	<input type="button" value="异步访问服务器" onclick="fn1()"/><span id="numspan1"></span>
+	<br/>
+	<input type="button" value="同步访问服务器" onclick="fn2()"/><span id="numspan2"></span>
+	<br/>
+	<input type="button" value="测试" onclick="alert('xx')"/>
+</body>
+</html>
